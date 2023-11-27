@@ -1,0 +1,60 @@
+     1                                  section .data
+     2 00000000 4974206973206E6F6F-         question: DB 'It is noon? (y/n) '
+     2 00000009 6E3F2028792F6E2920 
+     3                                      questionLen: EQU $-question
+     4                                      
+     5 00000012 790A                        answerYes: DB 'y', 10
+     6                                      answerYesLen: EQU $answerYes
+     7                                  
+     8 00000014 476F6F64204D6F726E-         morning: DB 'Good Morning', 10
+     8 0000001D 696E670A           
+     9                                      morningLen: EQU $-morning
+    10                                  
+    11 00000021 676F6F64206461790A          day: DB 'good day', 10
+    12                                      dayLen: EQU $-day
+    13                                  
+    14                                  section .bss
+    15 00000000 ??                          cin: RESB 1
+    16                                  
+    17                                  section .text
+    18                                      global _start
+    19                                  
+    20                                  _start:
+    21 00000000 B804000000                  mov eax, 4
+    22 00000005 BB01000000                  mov ebx, 1
+    23 0000000A B9[00000000]                mov ecx, question
+    24 0000000F BA12000000                  mov edx, questionLen
+    25 00000014 CD80                        int 80h
+    26                                  
+    27 00000016 B803000000                  mov eax, 3
+    28 0000001B BB00000000                  mov ebx, 0
+    29 00000020 B9[00000000]                mov ecx, cin
+    30 00000025 BA01000000                  mov edx, 1
+    31 0000002A CD80                        int 80h
+    32                                  
+    33 0000002C 8A0C25[12000000]            mov cl, [answerYes]
+    34 00000033 3A0C25[00000000]            cmp cl, [cin]
+    35 0000003A 7402                        je yes
+    36 0000003C 7522                        jne no
+    37                                  
+    38                                  yes:
+    39 0000003E B804000000                  mov eax, 4
+    40 00000043 BB01000000                  mov ebx, 1
+    41 00000048 B9[21000000]                mov ecx, day
+    42 0000004D BA09000000                  mov edx, dayLen
+    43 00000052 CD80                        int 80h
+    44                                      
+    45 00000054 B801000000                  mov eax, 1
+    46 00000059 BB00000000                  mov ebx, 0
+    47 0000005E CD80                        int 80h
+    48                                  
+    49                                  no:
+    50 00000060 B804000000                  mov eax, 4
+    51 00000065 BB01000000                  mov ebx, 1
+    52 0000006A B9[14000000]                mov ecx, morning
+    53 0000006F BA0D000000                  mov edx, morningLen
+    54 00000074 CD80                        int 80h
+    55                                      
+    56 00000076 B801000000                  mov eax, 1
+    57 0000007B BB00000000                  mov ebx, 0
+    58 00000080 CD80                        int 80h
