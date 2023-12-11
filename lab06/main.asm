@@ -1,6 +1,6 @@
 section .data
-    n: DB '', 10
-    s: DB ' '
+    n: DB '', 10 ;перенос строки
+    spase: DB ' ' ;пробел
 section .bss
     sym: resb 80
     symCode: resb 80
@@ -23,7 +23,7 @@ _start:
 
     mov eax, 4
     mov ebx, 1
-    mov ecx, s
+    mov ecx, spase
     mov edx, 1
     int 80h
 
