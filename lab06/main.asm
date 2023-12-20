@@ -53,7 +53,7 @@ ConvertNum:
         mov bl,10
     .divide:
         xor edx,edx 
-        div ebx 
+        div ebx
         add dl, `0`
         push dx
         inc ecx 
